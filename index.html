@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STREETS & ARTS | Haute Culinary Art</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Syne (Editorial/Modern) & Permanent Marker (Graffiti Accent) & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#070709',
+                        panel: '#101015',
+                        gold: '#d4af37',
+                        'gold-bright': '#f5d77f',
+                        cyan: '#00f3ff',
+                        magenta: '#ff0055',
+                        graffiti: '#ff0077',
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        graffiti: ['Permanent Marker', 'cursive'],
+                    },
+                    boxShadow: {
+                        'neo': '6px 6px 0px 0px rgba(212, 175, 55, 0.9)',
+                        'neo-cyan': '6px 6px 0px 0px rgba(0, 243, 255, 0.9)',
+                        'neo-magenta': '6px 6px 0px 0px rgba(255, 0, 85, 0.9)',
+                        'spatial': '0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px 2px rgba(212, 175, 55, 0.15)',
+                        'spatial-glow': '0 0 25px 2px rgba(0, 243, 255, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Spatial Glassmorphism & Custom Effects */
+        .glass-spatial {
+            background: rgba(18, 18, 24, 0.65);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 2px solid rgba(212, 175, 55, 0.25);
+        }
+        
+        .glass-spatial-card {
+            background: rgba(22, 22, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .glass-spatial-card:hover {
+            border-color: rgba(212, 175, 55, 0.8);
+            box-shadow: 0 15px 35px -5px rgba(212, 175, 55, 0.25), 6px 6px 0px 0px #d4af37;
+            transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+        }
+
+        .graffiti-tag {
+            font-family: 'Permanent Marker', cursive;
+            background: linear-gradient(135deg, #ff0055, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+        }
+
+        .spray-bg {
+            background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        .neo-btn {
+            position: relative;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+        }
+
+        .neo-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,0) !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070709;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-obsidian text-slate-100 font-sans antialiased min-h-screen spray-bg selection:bg-gold selection:text-black flex flex-col justify-between relative overflow-x-hidden">
+
+    <!-- Ambient Spatial Background Glows -->
+    <div class="fixed top-1/4 -left-32 w-96 h-96 bg-gold/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-1/4 -right-32 w-96 h-96 bg-cyan/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed top-2/3 left-1/3 w-80 h-80 bg-magenta/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+
+    <!-- PERSISTENT FLOATING SPATIAL GLASS NAVBAR -->
+    <header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl transition-all duration-300">
+        <nav class="glass-spatial rounded-2xl px-4 py-3 md:px-8 md:py-4 flex items-center justify-between shadow-2xl relative border-2 border-gold/40">
+            <!-- Brand Logo -->
+            <a href="#" onclick="switchPage('home'); return false;" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gold flex items-center justify-center font-syne text-black font-extrabold text-2xl shadow-neo border-2 border-black transform group-hover:rotate-6 transition-transform">
+                    N
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-syne font-black text-xl tracking-tighter leading-none text-white flex items-center gap-1">
+                        STREET <span class="text-gold">&</span> ARTS
+                    </span>
+                    <span class="font-graffiti text-xs text-cyan -mt-1 tracking-widest uppercase">Gastronomy</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden lg:flex items-center gap-1 xl:gap-2">
+                <button onclick="switchPage('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-xl text-sm font-bold tracking-wide transition-all text-gold bg-white/5 border border-gold/40">
+                    Home
+                </button>
+                <button onclick="switchPage('main-dishes')" id="nav-main-dishes" class="nav-btn px-4 py-2 rounded-xl text-sm font-bold tracking-wide text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                    Main Dishes
+                </button>
+                <button onclick="switchPage('desserts')" id="nav-desserts" class="nav-btn px-4 py-2 rounded-xl text-sm font-bold tracking-wide text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                    Desserts
+                </button>
+                <button onclick="switchPage('popular')" id="nav-popular" class="nav-btn px-4 py-2 rounded-xl text-sm font-bold tracking-wide text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                    Popular Dishes
+                </button>
+                <button onclick="switchPage('gallery')" id="nav-gallery" class="nav-btn px-4 py-2 rounded-xl text-sm font-bold tracking-wide text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                    Gallery
+                </button>
+                <button onclick="switchPage('visitors')" id="nav-visitors" class="nav-btn px-4 py-2 rounded-xl text-sm font-bold tracking-wide text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                    Visitors
+                </button>
+                <button onclick="switchPage('contact')" id="nav-contact" class="nav-btn px-4 py-2 rounded-xl text-sm font-bold tracking-wide text-slate-300 hover:text-white hover:bg-white/5 transition-all">
+                    Contact
+                </button>
+            </div>
+
+            <!-- CTA Action -->
+            <div class="hidden sm:flex items-center gap-3">
+                <button onclick="switchPage('contact')" class="neo-btn bg-gold hover:bg-gold-bright text-black px-5 py-2.5 rounded-xl border-2 border-black shadow-neo font-syne text-xs tracking-wider">
+                    Reserve Table
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-xl bg-white/10 text-gold hover:bg-white/20 border border-gold/30">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden mt-2 p-5 rounded-2xl glass-spatial border-2 border-gold/50 flex flex-col gap-3 shadow-2xl">
+            <button onclick="switchPage('home'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 font-bold">Home</button>
+            <button onclick="switchPage('main-dishes'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 font-bold">Main Dishes</button>
+            <button onclick="switchPage('desserts'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 font-bold">Desserts</button>
+            <button onclick="switchPage('popular'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 font-bold">Popular Dishes</button>
+            <button onclick="switchPage('gallery'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 font-bold">Gallery</button>
+            <button onclick="switchPage('visitors'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 font-bold">Visitors & Vloggers</button>
+            <button onclick="switchPage('contact'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 font-bold">Contact & Reservations</button>
+        </div>
+    </header>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="flex-grow pt-28 pb-16 px-4 md:px-8 max-w-7xl mx-auto w-full z-10">
+
+        <!-- ================= PAGE 1: HOME ================= -->
+        <section id="page-home" class="page-content space-y-24">
+            
+            <!-- Hero Viewport -->
+            <div class="relative rounded-3xl glass-spatial p-6 md:p-14 overflow-hidden border-2 border-gold/50 shadow-spatial min-h-[80vh] flex flex-col justify-center">
+                <!-- Graffiti Art Overlay Badges -->
+                <div class="absolute top-6 right-6 md:top-10 md:right-10 transform rotate-12 bg-magenta text-white font-graffiti px-4 py-2 rounded-lg border-2 border-black shadow-neo text-lg md:text-xl z-20">
+                    #1 Luxury Culinary Spot
+                </div>
+                <div class="absolute bottom-8 right-12 hidden md:block transform -rotate-6 bg-cyan text-black font-graffiti px-4 py-2 rounded-lg border-2 border-black shadow-neo-magenta text-base z-20">
+                    "Haute Couture Cuisine"
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-gold text-xs font-bold tracking-widest uppercase">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> High-Fashion Gastronomy
+                        </div>
+                        <h1 class="font-syne font-black text-4xl sm:text-6xl md:text-7xl leading-none text-white tracking-tight">
+                            RAW <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-bright to-cyan">LUXURY</span><br>
+                            MET <span class="font-graffiti text-magenta underline decoration-cyan decoration-wavy text-4xl sm:text-6xl">STREET ART</span>
+                        </h1>
+                        <p class="text-slate-300 text-lg md:text-xl max-w-xl font-light leading-relaxed">
+                            Experience a revolutionary dining ecosystem where Michelin-caliber gastronomy intersects with neo-brutalist spatial aesthetics & bold urban art.
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center gap-4 pt-4">
+                            <button onclick="switchPage('main-dishes')" class="neo-btn bg-gold hover:bg-gold-bright text-black px-8 py-4 rounded-xl border-2 border-black shadow-neo font-syne text-sm flex items-center gap-3">
+                                Explore Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="switchPage('contact')" class="neo-btn bg-panel hover:bg-slate-800 text-gold px-8 py-4 rounded-xl border-2 border-gold/60 shadow-neo-cyan font-syne text-sm flex items-center gap-3">
+                                Book Table <i data-lucide="calendar" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 relative">
+                        <!-- Hero Spatial Card Feature -->
+                        <div class="glass-spatial-card p-4 rounded-2xl border-2 border-gold/40 relative">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" alt="Signature Dish" class="w-full h-80 md:h-96 object-cover rounded-xl border border-white/20">
+                            <div class="absolute -bottom-6 -left-6 bg-obsidian/90 border-2 border-gold p-4 rounded-xl shadow-2xl backdrop-blur-md max-w-xs">
+                                <span class="text-xs font-bold text-gold uppercase tracking-wider block">Chef's Signature</span>
+                                <p class="font-syne font-bold text-lg text-white">Dry-Aged Wagyu Tomahawk</p>
+                                <div class="flex items-center gap-1 text-gold text-xs mt-1">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-gold"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-gold"></i>
+                                    <span class="text-slate-400 ml-1">(4.9/5)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOME SECTION 1: POPULAR DISHES PREVIEW -->
+            <div class="space-y-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <span class="font-graffiti text-cyan text-xl tracking-wider">Crowd Favorites</span>
+                        <h2 class="font-syne font-black text-3xl md:text-5xl text-white">POPULAR DISHES</h2>
+                    </div>
+                    <button onclick="switchPage('popular')" class="text-gold font-bold hover:underline flex items-center gap-2">
+                        View All Popular Dishes <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Preview Card 1 -->
+                    <div class="glass-spatial-card p-5 rounded-2xl relative overflow-hidden group">
+                        <span class="absolute top-4 right-4 z-10 bg-gold text-black text-xs font-black px-3 py-1 rounded-full border border-black shadow-md">POPULAR #1</span>
+                        <div class="overflow-hidden rounded-xl h-60 mb-4 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Wagyu Steak" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-syne font-bold text-xl text-white mb-2">Black Truffle Wagyu Ribeye</h3>
+                        <p class="text-slate-400 text-sm mb-4 line-clamp-2">28-day dry aged A5 Japanese Wagyu served with shaved black Périgord truffle and bone marrow jus.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/10">
+                            <span class="font-syne text-2xl font-black text-gold">$145</span>
+                            <button onclick="switchPage('popular')" class="p-2 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black transition-colors">
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preview Card 2 -->
+                    <div class="glass-spatial-card p-5 rounded-2xl relative overflow-hidden group">
+                        <span class="absolute top-4 right-4 z-10 bg-cyan text-black text-xs font-black px-3 py-1 rounded-full border border-black shadow-md">POPULAR #2</span>
+                        <div class="overflow-hidden rounded-xl h-60 mb-4 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80" alt="Seafood Tower" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-syne font-bold text-xl text-white mb-2">Neon Lobster Thermidor</h3>
+                        <p class="text-slate-400 text-sm mb-4 line-clamp-2">Brittany lobster poached in saffron reduction, topped with cognac foam and caviar accents.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/10">
+                            <span class="font-syne text-2xl font-black text-gold">$120</span>
+                            <button onclick="switchPage('popular')" class="p-2 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black transition-colors">
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preview Card 3 -->
+                    <div class="glass-spatial-card p-5 rounded-2xl relative overflow-hidden group">
+                        <span class="absolute top-4 right-4 z-10 bg-magenta text-white text-xs font-black px-3 py-1 rounded-full border border-black shadow-md">POPULAR #3</span>
+                        <div class="overflow-hidden rounded-xl h-60 mb-4 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80" alt="Gold Dessert" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-syne font-bold text-xl text-white mb-2">24K Gold Obsidian Sphere</h3>
+                        <p class="text-slate-400 text-sm mb-4 line-clamp-2">Dark Valrhona chocolate shell, wild berry compote, gold leaf melt with hot espresso poured tableside.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/10">
+                            <span class="font-syne text-2xl font-black text-gold">$42</span>
+                            <button onclick="switchPage('popular')" class="p-2 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black transition-colors">
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOME SECTION 2: DESSERTS & MAIN DISHES TEASER -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Main Dishes Banner -->
+                <div class="glass-spatial p-8 rounded-3xl border-2 border-cyan/40 relative overflow-hidden flex flex-col justify-between min-h-[350px]">
+                    <div class="absolute -right-10 -bottom-10 opacity-20 text-cyan">
+                        <i data-lucide="utensils" class="w-64 h-64"></i>
+                    </div>
+                    <div class="relative z-10 space-y-4">
+                        <span class="font-graffiti text-cyan text-lg">Culinary Masterpieces</span>
+                        <h3 class="font-syne font-black text-3xl md:text-4xl text-white">MAIN COURSES</h3>
+                        <p class="text-slate-300 max-w-md text-sm leading-relaxed">
+                            From prime cuts aged in our obsidian cellar to wild-caught deep ocean delicacies, engineered by Executive Chef Jean-Luc Vance.
+                        </p>
+                    </div>
+                    <div class="relative z-10 pt-6">
+                        <button onclick="switchPage('main-dishes')" class="neo-btn bg-cyan text-black px-6 py-3 rounded-xl border-2 border-black shadow-neo font-syne text-xs flex items-center gap-2">
+                            Explore Mains Page <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Desserts Banner -->
+                <div class="glass-spatial p-8 rounded-3xl border-2 border-magenta/40 relative overflow-hidden flex flex-col justify-between min-h-[350px]">
+                    <div class="absolute -right-10 -bottom-10 opacity-20 text-magenta">
+                        <i data-lucide="cake" class="w-64 h-64"></i>
+                    </div>
+                    <div class="relative z-10 space-y-4">
+                        <span class="font-graffiti text-magenta text-lg">Sweet Extravaganza</span>
+                        <h3 class="font-syne font-black text-3xl md:text-4xl text-white">EDITORIAL DESSERTS</h3>
+                        <p class="text-slate-300 max-w-md text-sm leading-relaxed">
+                            Artisanal pastry sculptures, liquid nitrogen creations, and gold-dusted chocolate fantasies crafted by Pastry Sculptor Maya Lin.
+                        </p>
+                    </div>
+                    <div class="relative z-10 pt-6">
+                        <button onclick="switchPage('desserts')" class="neo-btn bg-magenta text-white px-6 py-3 rounded-xl border-2 border-black shadow-neo font-syne text-xs flex items-center gap-2">
+                            Explore Desserts Page <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOME SECTION 3: VLOGGERS / VISITORS PREVIEW TEASER -->
+            <div class="glass-spatial p-8 md:p-12 rounded-3xl border-2 border-gold/40 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+                    <div>
+                        <span class="font-graffiti text-gold text-xl">Famous Critics & Creators</span>
+                        <h2 class="font-syne font-black text-3xl md:text-5xl text-white">FEATURED VISITORS</h2>
+                    </div>
+                    <button onclick="switchPage('visitors')" class="neo-btn bg-gold hover:bg-gold-bright text-black px-6 py-3 rounded-xl border-2 border-black shadow-neo font-syne text-xs">
+                        See All Influencers & Reviews
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Creator Card Preview 1 -->
+                    <div class="glass-spatial-card p-4 rounded-xl text-center">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Vlogger" class="w-20 h-20 rounded-full mx-auto border-2 border-gold object-cover mb-3">
+                        <h4 class="font-syne font-bold text-white">Sophia Chen</h4>
+                        <span class="text-cyan text-xs font-bold block mb-2">@TastyTravels (2.4M Subs)</span>
+                        <p class="text-slate-300 text-xs italic">"The Black Truffle Ribeye literally blew my mind. 10/10 spatial dining!"</p>
+                    </div>
+                    <!-- Creator Card Preview 2 -->
+                    <div class="glass-spatial-card p-4 rounded-xl text-center">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Vlogger" class="w-20 h-20 rounded-full mx-auto border-2 border-magenta object-cover mb-3">
+                        <h4 class="font-syne font-bold text-white">Marcus Vance</h4>
+                        <span class="text-magenta text-xs font-bold block mb-2">@UrbanEats (1.8M Subs)</span>
+                        <p class="text-slate-300 text-xs italic">"The neo-brutalist vibe and gold desserts make this NYC's coolest spot."</p>
+                    </div>
+                    <!-- Creator Card Preview 3 -->
+                    <div class="glass-spatial-card p-4 rounded-xl text-center">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Vlogger" class="w-20 h-20 rounded-full mx-auto border-2 border-cyan object-cover mb-3">
+                        <h4 class="font-syne font-bold text-white">Elena Rostova</h4>
+                        <span class="text-cyan text-xs font-bold block mb-2">@LuxGourmet (950K Subs)</span>
+                        <p class="text-slate-300 text-xs italic">"Highest luxury standard combined with wild street graffiti art!"</p>
+                    </div>
+                    <!-- Creator Card Preview 4 -->
+                    <div class="glass-spatial-card p-4 rounded-xl text-center">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" alt="Vlogger" class="w-20 h-20 rounded-full mx-auto border-2 border-gold object-cover mb-3">
+                        <h4 class="font-syne font-bold text-white">David K.</h4>
+                        <span class="text-gold text-xs font-bold block mb-2">@TheFoodBite (3.1M Subs)</span>
+                        <p class="text-slate-300 text-xs italic">"Unmatched ambiance. You have to order the 24K Obsidian Sphere!"</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= PAGE 2: MAIN DISHES ================= -->
+        <section id="page-main-dishes" class="page-content space-y-10 hidden">
+            <!-- Header -->
+            <div class="glass-spatial p-8 rounded-3xl border-2 border-cyan/40 relative">
+                <span class="font-graffiti text-cyan text-2xl">Gastronomical Masterpieces</span>
+                <h1 class="font-syne font-black text-4xl md:text-6xl text-white mt-1">MAIN COURSES</h1>
+                <p class="text-slate-300 max-w-2xl mt-2 font-light">
+                    Savor high-end culinary engineering crafted with aged meats, fresh deep-ocean seafood, and organic botanical infusions.
+                </p>
+
+                <!-- Filter Controls -->
+                <div class="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-white/10">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2">Filter Category:</span>
+                    <button onclick="filterDishes('all', 'main')" class="filter-main-btn active-filter px-4 py-2 rounded-xl text-xs font-bold bg-cyan text-black border border-cyan">All Mains</button>
+                    <button onclick="filterDishes('steaks', 'main')" class="filter-main-btn px-4 py-2 rounded-xl text-xs font-bold bg-white/5 text-slate-300 border border-white/10 hover:border-cyan">Prime Steaks</button>
+                    <button onclick="filterDishes('seafood', 'main')" class="filter-main-btn px-4 py-2 rounded-xl text-xs font-bold bg-white/5 text-slate-300 border border-white/10 hover:border-cyan">Seafood</button>
+                    <button onclick="filterDishes('chef', 'main')" class="filter-main-btn px-4 py-2 rounded-xl text-xs font-bold bg-white/5 text-slate-300 border border-white/10 hover:border-cyan">Chef Specials</button>
+                </div>
+            </div>
+
+            <!-- Dishes Grid -->
+            <div id="mains-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dish Item 1 -->
+                <div class="dish-card glass-spatial-card p-6 rounded-2xl flex flex-col justify-between" data-category="steaks chef">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Wagyu Steak" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-gold text-black font-syne font-black text-xs px-3 py-1 rounded-md border border-black shadow-neo">A5 WAGYU</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Black Truffle Wagyu</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$145</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            28-day dry aged A5 Japanese Miyazaki Wagyu ribeye, served with shaved black Périgord truffle, bone marrow reduction, and roasted heirloom roots.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Black Truffle Wagyu', '$145')" class="neo-btn w-full py-3 bg-gold/10 hover:bg-gold hover:text-black text-gold border border-gold/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order / Inquire Dish <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dish Item 2 -->
+                <div class="dish-card glass-spatial-card p-6 rounded-2xl flex flex-col justify-between" data-category="seafood chef">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80" alt="Lobster" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-cyan text-black font-syne font-black text-xs px-3 py-1 rounded-md border border-black shadow-neo">FRESH CATCH</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Neon Lobster Thermidor</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$120</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Whole wild Brittany lobster poached in saffron reduction, topped with cognac foam, Gruyère crust, and Beluga caviar accents.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Neon Lobster Thermidor', '$120')" class="neo-btn w-full py-3 bg-cyan/10 hover:bg-cyan hover:text-black text-cyan border border-cyan/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order / Inquire Dish <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dish Item 3 -->
+                <div class="dish-card glass-spatial-card p-6 rounded-2xl flex flex-col justify-between" data-category="steaks">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=800&q=80" alt="Rack of Lamb" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-magenta text-white font-syne font-black text-xs px-3 py-1 rounded-md border border-black shadow-neo">ORGANIC</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Herb-Crusted Rack of Lamb</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$95</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Colorado grass-fed lamb roasted with pistachio herb crust, mint foam, smoked eggplant puree, and natural lamb reduction.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Herb-Crusted Rack of Lamb', '$95')" class="neo-btn w-full py-3 bg-magenta/10 hover:bg-magenta hover:text-white text-magenta border border-magenta/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order / Inquire Dish <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dish Item 4 -->
+                <div class="dish-card glass-spatial-card p-6 rounded-2xl flex flex-col justify-between" data-category="seafood">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80" alt="Salmon" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Glazed Chilean Sea Bass</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$88</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Miso-mirin glazed wild sea bass, served over bok choy, dashi-infused risotto, and crispy lotus root chips.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Glazed Chilean Sea Bass', '$88')" class="neo-btn w-full py-3 bg-gold/10 hover:bg-gold hover:text-black text-gold border border-gold/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order / Inquire Dish <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dish Item 5 -->
+                <div class="dish-card glass-spatial-card p-6 rounded-2xl flex flex-col justify-between" data-category="chef">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=800&q=80" alt="Duck Breast" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Smoked Duck Breast</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$76</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Pan-seared Moulard duck breast smoked with cherrywood, paired with black cherry reduction and celery root fondue.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Smoked Duck Breast', '$76')" class="neo-btn w-full py-3 bg-gold/10 hover:bg-gold hover:text-black text-gold border border-gold/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order / Inquire Dish <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dish Item 6 -->
+                <div class="dish-card glass-spatial-card p-6 rounded-2xl flex flex-col justify-between" data-category="chef">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80" alt="Truffle Pasta" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Handcrafted Truffle Tagliolini</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$68</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Fresh hand-rolled pasta tossed in 36-month Parmigiano Reggiano wheel, white truffle cream, and wild chanterelles.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Handcrafted Truffle Tagliolini', '$68')" class="neo-btn w-full py-3 bg-gold/10 hover:bg-gold hover:text-black text-gold border border-gold/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order / Inquire Dish <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: DESSERTS ================= -->
+        <section id="page-desserts" class="page-content space-y-10 hidden">
+            <!-- Header -->
+            <div class="glass-spatial p-8 rounded-3xl border-2 border-magenta/40 relative">
+                <span class="font-graffiti text-magenta text-2xl">Pastry Architecture</span>
+                <h1 class="font-syne font-black text-4xl md:text-6xl text-white mt-1">EDITORIAL DESSERTS</h1>
+                <p class="text-slate-300 max-w-2xl mt-2 font-light">
+                    Avant-garde confectionery featuring gold leaf finishings, liquid nitrogen table-side sorbets, and single-origin dark chocolate sculptures.
+                </p>
+            </div>
+
+            <!-- Desserts Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dessert 1 -->
+                <div class="glass-spatial-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80" alt="Gold Dessert" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-gold text-black font-syne font-black text-xs px-3 py-1 rounded-md border border-black shadow-neo">SIGNATURE</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">24K Obsidian Sphere</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$42</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            70% Valrhona dark chocolate shell, wild raspberry compote, hazelnut praline core, melted tableside with hot Ethiopian espresso.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('24K Obsidian Sphere', '$42')" class="neo-btn w-full py-3 bg-magenta/10 hover:bg-magenta hover:text-white text-magenta border border-magenta/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order Dessert <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dessert 2 -->
+                <div class="glass-spatial-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=800&q=80" alt="Matcha Sculpture" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-cyan text-black font-syne font-black text-xs px-3 py-1 rounded-md border border-black shadow-neo">NITRO</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Kyoto Matcha Zenith</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$36</span>
+                            </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Ceremonial Grade Uji matcha mousse, black sesame crisp, Yuzu gel, frozen with liquid nitrogen table presentation.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Kyoto Matcha Zenith', '$36')" class="neo-btn w-full py-3 bg-cyan/10 hover:bg-cyan hover:text-black text-cyan border border-cyan/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order Dessert <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dessert 3 -->
+                <div class="glass-spatial-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80" alt="Souffle" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Grand Marnier Soufflé</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$34</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Air-light orange liqueur soufflé, Madagascar vanilla bean crème anglaise, served fresh out of oven.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Grand Marnier Soufflé', '$34')" class="neo-btn w-full py-3 bg-gold/10 hover:bg-gold hover:text-black text-gold border border-gold/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order Dessert <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dessert 4 -->
+                <div class="glass-spatial-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Tart" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Graffiti Berry Tart</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$30</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Almond crust, wild blackberry reduction, edible neon paint splashes, and whipped mascarpone cream.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Graffiti Berry Tart', '$30')" class="neo-btn w-full py-3 bg-magenta/10 hover:bg-magenta hover:text-white text-magenta border border-magenta/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order Dessert <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dessert 5 -->
+                <div class="glass-spatial-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80" alt="Chocolate Cake" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Velvet Neon Truffle Cake</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$38</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Layered dark chocolate ganache cake infused with smoked bourbon and sea salt caramel.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Velvet Neon Truffle Cake', '$38')" class="neo-btn w-full py-3 bg-gold/10 hover:bg-gold hover:text-black text-gold border border-gold/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order Dessert <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dessert 6 -->
+                <div class="glass-spatial-card p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl h-64 mb-5 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80" alt="Cheesecake" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-syne font-bold text-2xl text-white">Deconstructed Yuzu Cake</h3>
+                            <span class="font-syne text-2xl font-black text-gold">$32</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Japanese citrus curd, graham crumble soil, edible gold leaves, and elderflower sorbet.
+                        </p>
+                    </div>
+                    <button onclick="openOrderModal('Deconstructed Yuzu Cake', '$32')" class="neo-btn w-full py-3 bg-cyan/10 hover:bg-cyan hover:text-black text-cyan border border-cyan/40 rounded-xl font-syne text-xs flex items-center justify-center gap-2">
+                        Order Dessert <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 4: POPULAR DISHES ================= -->
+        <section id="page-popular" class="page-content space-y-10 hidden">
+            <div class="glass-spatial p-8 rounded-3xl border-2 border-gold/40 relative">
+                <span class="font-graffiti text-gold text-2xl">Hall of Fame</span>
+                <h1 class="font-syne font-black text-4xl md:text-6xl text-white mt-1">MOST POPULAR DISHES</h1>
+                <p class="text-slate-300 max-w-2xl mt-2 font-light">
+                    Voted #1 by food critics, food vloggers, and our elite patrons worldwide.
+                </p>
+            </div>
+
+            <!-- Ranked Popular Dishes Grid -->
+            <div class="space-y-8">
+                <!-- Rank 1 -->
+                <div class="glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-gold flex flex-col lg:flex-row gap-8 items-center relative overflow-hidden">
+                    <div class="absolute top-4 left-4 bg-gold text-black font-syne font-black text-lg px-4 py-1 rounded-xl border border-black shadow-neo z-10">
+                        RANK #1
+                    </div>
+                    <div class="w-full lg:w-1/2 h-72 lg:h-96 rounded-2xl overflow-hidden border border-white/20">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" alt="Popular 1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-4">
+                        <div class="flex items-center gap-2 text-gold">
+                            <i data-lucide="flame" class="w-5 h-5 fill-gold"></i>
+                            <span class="text-xs font-bold uppercase tracking-widest">Ordered 3,400+ Times This Month</span>
+                        </div>
+                        <h2 class="font-syne font-black text-3xl md:text-4xl text-white">Black Truffle Wagyu Ribeye</h2>
+                        <p class="text-slate-300 leading-relaxed text-sm md:text-base">
+                            Our indisputable crowned jewel. Sourced directly from Miyazaki Prefecture, aged 28 days in house, seared on binchotan charcoal and drizzled with fresh black truffle jus.
+                        </p>
+                        <div class="flex items-center gap-6 py-2">
+                            <div>
+                                <span class="text-xs text-slate-400 block uppercase">Price</span>
+                                <span class="font-syne font-black text-3xl text-gold">$145</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block uppercase">Vlogger Rating</span>
+                                <span class="font-syne font-bold text-xl text-cyan">9.9 / 10</span>
+                            </div>
+                        </div>
+                        <button onclick="openOrderModal('Black Truffle Wagyu Ribeye', '$145')" class="neo-btn bg-gold text-black px-8 py-3 rounded-xl border-2 border-black shadow-neo font-syne text-xs">
+                            Order Signature Dish
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rank 2 -->
+                <div class="glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-cyan/60 flex flex-col lg:flex-row-reverse gap-8 items-center relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-cyan text-black font-syne font-black text-lg px-4 py-1 rounded-xl border border-black shadow-neo z-10">
+                        RANK #2
+                    </div>
+                    <div class="w-full lg:w-1/2 h-72 lg:h-96 rounded-2xl overflow-hidden border border-white/20">
+                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1000&q=80" alt="Popular 2" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-4">
+                        <div class="flex items-center gap-2 text-cyan">
+                            <i data-lucide="award" class="w-5 h-5"></i>
+                            <span class="text-xs font-bold uppercase tracking-widest">Critics' Choice Award 2025</span>
+                        </div>
+                        <h2 class="font-syne font-black text-3xl md:text-4xl text-white">Neon Lobster Thermidor</h2>
+                        <p class="text-slate-300 leading-relaxed text-sm md:text-base">
+                            A classic reborn with spatial flair. Poached in saffron stock, baked under a cognac-infused Gruyère crust, and garnished with high-grade Beluga caviar.
+                        </p>
+                        <div class="flex items-center gap-6 py-2">
+                            <div>
+                                <span class="text-xs text-slate-400 block uppercase">Price</span>
+                                <span class="font-syne font-black text-3xl text-gold">$120</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block uppercase">Vlogger Rating</span>
+                                <span class="font-syne font-bold text-xl text-cyan">9.8 / 10</span>
+                            </div>
+                        </div>
+                        <button onclick="openOrderModal('Neon Lobster Thermidor', '$120')" class="neo-btn bg-cyan text-black px-8 py-3 rounded-xl border-2 border-black shadow-neo font-syne text-xs">
+                            Order Popular Seafood
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rank 3 -->
+                <div class="glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-magenta/60 flex flex-col lg:flex-row gap-8 items-center relative overflow-hidden">
+                    <div class="absolute top-4 left-4 bg-magenta text-white font-syne font-black text-lg px-4 py-1 rounded-xl border border-black shadow-neo z-10">
+                        RANK #3
+                    </div>
+                    <div class="w-full lg:w-1/2 h-72 lg:h-96 rounded-2xl overflow-hidden border border-white/20">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1000&q=80" alt="Popular 3" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-full lg:w-1/2 space-y-4">
+                        <div class="flex items-center gap-2 text-magenta">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                            <span class="text-xs font-bold uppercase tracking-widest">Viral Social Media Hit</span>
+                        </div>
+                        <h2 class="font-syne font-black text-3xl md:text-4xl text-white">24K Gold Obsidian Sphere</h2>
+                        <p class="text-slate-300 leading-relaxed text-sm md:text-base">
+                            The dessert that broke Instagram. A chocolate sphere encased in 24-karat edible gold, melted table-side under an espresso rain shower.
+                        </p>
+                        <div class="flex items-center gap-6 py-2">
+                            <div>
+                                <span class="text-xs text-slate-400 block uppercase">Price</span>
+                                <span class="font-syne font-black text-3xl text-gold">$42</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block uppercase">Vlogger Rating</span>
+                                <span class="font-syne font-bold text-xl text-cyan">10 / 10</span>
+                            </div>
+                        </div>
+                        <button onclick="openOrderModal('24K Obsidian Sphere', '$42')" class="neo-btn bg-magenta text-white px-8 py-3 rounded-xl border-2 border-black shadow-neo font-syne text-xs">
+                            Order Viral Dessert
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 5: GALLERY ================= -->
+        <section id="page-gallery" class="page-content space-y-10 hidden">
+            <div class="glass-spatial p-8 rounded-3xl border-2 border-cyan/40 relative">
+                <span class="font-graffiti text-cyan text-2xl">Spatial Ambiance & Kitchen</span>
+                <h1 class="font-syne font-black text-4xl md:text-6xl text-white mt-1">VISUAL GALLERY</h1>
+                <p class="text-slate-300 max-w-2xl mt-2 font-light">
+                    Take an inside look at our neo-brutalist dining room, open flame kitchen, private VIP lounge, and artisanal dishes.
+                </p>
+            </div>
+
+            <!-- Gallery Grid with Lightbox Event -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div onclick="openLightbox('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80', 'Spatial Dining Main Hall')" class="glass-spatial-card p-3 rounded-2xl cursor-pointer group relative overflow-hidden">
+                    <div class="h-72 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Interior" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-gold text-black font-syne font-bold px-4 py-2 rounded-xl border border-black shadow-neo text-xs flex items-center gap-2">
+                                <i data-lucide="maximize-2" class="w-4 h-4"></i> Expand Photo
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-syne font-bold text-white text-lg">Main Spatial Dining Hall</h4>
+                        <p class="text-xs text-slate-400">Cyber-luxe interiors with glowing neon acoustics</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div onclick="openLightbox('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=80', 'Executive Chef Kitchen Action')" class="glass-spatial-card p-3 rounded-2xl cursor-pointer group relative overflow-hidden">
+                    <div class="h-72 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80" alt="Kitchen" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-cyan text-black font-syne font-bold px-4 py-2 rounded-xl border border-black shadow-neo text-xs flex items-center gap-2">
+                                <i data-lucide="maximize-2" class="w-4 h-4"></i> Expand Photo
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-syne font-bold text-white text-lg">Open Flame Kitchen</h4>
+                        <p class="text-xs text-slate-400">Michelin-trained chefs executing precision plates</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div onclick="openLightbox('https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=1200&q=80', 'Private VIP Lounge')" class="glass-spatial-card p-3 rounded-2xl cursor-pointer group relative overflow-hidden">
+                    <div class="h-72 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=800&q=80" alt="VIP Lounge" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-magenta text-white font-syne font-bold px-4 py-2 rounded-xl border border-black shadow-neo text-xs flex items-center gap-2">
+                                <i data-lucide="maximize-2" class="w-4 h-4"></i> Expand Photo
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-syne font-bold text-white text-lg">The Obsidian VIP Lounge</h4>
+                        <p class="text-xs text-slate-400">Exclusive private dining chamber for influencers & celebrities</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div onclick="openLightbox('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80', 'Mixology Bar')" class="glass-spatial-card p-3 rounded-2xl cursor-pointer group relative overflow-hidden">
+                    <div class="h-72 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" alt="Bar" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-gold text-black font-syne font-bold px-4 py-2 rounded-xl border border-black shadow-neo text-xs flex items-center gap-2">
+                                <i data-lucide="maximize-2" class="w-4 h-4"></i> Expand Photo
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-syne font-bold text-white text-lg">Neon Cocktails Lab</h4>
+                        <p class="text-xs text-slate-400">Molecular mixology with smoked botanical spirits</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div onclick="openLightbox('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80', 'Signature Plating Detail')" class="glass-spatial-card p-3 rounded-2xl cursor-pointer group relative overflow-hidden">
+                    <div class="h-72 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Plating" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-cyan text-black font-syne font-bold px-4 py-2 rounded-xl border border-black shadow-neo text-xs flex items-center gap-2">
+                                <i data-lucide="maximize-2" class="w-4 h-4"></i> Expand Photo
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-syne font-bold text-white text-lg">High-Fashion Plating</h4>
+                        <p class="text-xs text-slate-400">Edible art styled like magazine editorial spreads</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div onclick="openLightbox('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80', 'Outdoor Neon Patio')" class="glass-spatial-card p-3 rounded-2xl cursor-pointer group relative overflow-hidden">
+                    <div class="h-72 rounded-xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80" alt="Patio" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-magenta text-white font-syne font-bold px-4 py-2 rounded-xl border border-black shadow-neo text-xs flex items-center gap-2">
+                                <i data-lucide="maximize-2" class="w-4 h-4"></i> Expand Photo
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-syne font-bold text-white text-lg">Rooftop Graffiti Terrace</h4>
+                        <p class="text-xs text-slate-400">Skyline views paired with live DJ sets & art installations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 6: VISITORS & VLOGGERS ================= -->
+        <section id="page-visitors" class="page-content space-y-10 hidden">
+            <div class="glass-spatial p-8 rounded-3xl border-2 border-magenta/40 relative">
+                <span class="font-graffiti text-magenta text-2xl">Influencers, Vloggers & Celebrities</span>
+                <h1 class="font-syne font-black text-4xl md:text-6xl text-white mt-1">OUR ESTEEMED VISITORS</h1>
+                <p class="text-slate-300 max-w-2xl mt-2 font-light">
+                    See what world-renowned food creators, YouTube vloggers, and critics say about their NOIR & NEON dining experience.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Vlogger Card 1 -->
+                <div class="glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-gold/40 flex flex-col justify-between space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Sophia Chen" class="w-20 h-20 rounded-full border-2 border-gold object-cover shadow-neo">
+                        <div>
+                            <h3 class="font-syne font-bold text-2xl text-white">Sophia Chen</h3>
+                            <span class="text-cyan text-sm font-bold block">@TastyTravels (2.4M Subscribers)</span>
+                            <div class="flex items-center gap-1 text-gold text-xs mt-1">
+                                <i data-lucide="youtube" class="w-4 h-4 text-red-500"></i> YouTube Food Vlogger
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/10 font-light text-slate-300 text-sm leading-relaxed italic">
+                        "I've eaten at Michelin 3-star places across Paris and Tokyo, but NOIR & NEON is on another level. The Black Truffle Wagyu and spatial 3D glass environment was mind blowing. Recorded my highest viewed vlog ever here!"
+                    </div>
+                    <div class="flex items-center justify-between pt-2">
+                        <span class="text-xs text-slate-400">Visited: October 2026</span>
+                        <a href="https://youtube.com" target="_blank" class="neo-btn px-4 py-2 bg-gold/10 hover:bg-gold hover:text-black text-gold text-xs rounded-xl border border-gold/40">Watch Vlog Highlights</a>
+                    </div>
+                </div>
+
+                <!-- Vlogger Card 2 -->
+                <div class="glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-cyan/40 flex flex-col justify-between space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Marcus Vance" class="w-20 h-20 rounded-full border-2 border-cyan object-cover shadow-neo-cyan">
+                        <div>
+                            <h3 class="font-syne font-bold text-2xl text-white">Marcus Vance</h3>
+                            <span class="text-magenta text-sm font-bold block">@UrbanEats (1.8M Followers)</span>
+                            <div class="flex items-center gap-1 text-gold text-xs mt-1">
+                                <i data-lucide="instagram" class="w-4 h-4 text-pink-500"></i> Culinary Content Creator
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/10 font-light text-slate-300 text-sm leading-relaxed italic">
+                        "The raw neo-brutalist decor paired with liquid nitrogen desserts is absolute perfection. My followers haven't stopped asking about the 24K Obsidian Sphere dessert!"
+                    </div>
+                    <div class="flex items-center justify-between pt-2">
+                        <span class="text-xs text-slate-400">Visited: November 2026</span>
+                        <a href="https://instagram.com" target="_blank" class="neo-btn px-4 py-2 bg-cyan/10 hover:bg-cyan hover:text-black text-cyan text-xs rounded-xl border border-cyan/40">View Instagram Reel</a>
+                    </div>
+                </div>
+
+                <!-- Vlogger Card 3 -->
+                <div class="glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-magenta/40 flex flex-col justify-between space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Elena Rostova" class="w-20 h-20 rounded-full border-2 border-magenta object-cover shadow-neo-magenta">
+                        <div>
+                            <h3 class="font-syne font-bold text-2xl text-white">Elena Rostova</h3>
+                            <span class="text-cyan text-sm font-bold block">@LuxGourmet (950K Subs)</span>
+                            <div class="flex items-center gap-1 text-gold text-xs mt-1">
+                                <i data-lucide="award" class="w-4 h-4 text-gold"></i> Senior Culinary Critic
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/10 font-light text-slate-300 text-sm leading-relaxed italic">
+                        "Rarely does a restaurant master both avant-garde street aesthetic and flawless fine dining service. The Neon Lobster Thermidor is worth booking months in advance."
+                    </div>
+                    <div class="flex items-center justify-between pt-2">
+                        <span class="text-xs text-slate-400">Visited: September 2026</span>
+                        <a href="#" onclick="switchPage('contact')" class="neo-btn px-4 py-2 bg-magenta/10 hover:bg-magenta hover:text-white text-magenta text-xs rounded-xl border border-magenta/40">Book Same Table</a>
+                    </div>
+                </div>
+
+                <!-- Vlogger Card 4 -->
+                <div class="glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-gold/40 flex flex-col justify-between space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" alt="David Kim" class="w-20 h-20 rounded-full border-2 border-gold object-cover shadow-neo">
+                        <div>
+                            <h3 class="font-syne font-bold text-2xl text-white">David Kim</h3>
+                            <span class="text-gold text-sm font-bold block">@TheFoodBite (3.1M Subs)</span>
+                            <div class="flex items-center gap-1 text-gold text-xs mt-1">
+                                <i data-lucide="youtube" class="w-4 h-4 text-red-500"></i> Global Food Host
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/10 font-light text-slate-300 text-sm leading-relaxed italic">
+                        "The vibe here is electric. Graffiti murals on obsidian walls combined with Miyazaki A5 steak. NOIR & NEON is the future of luxury dining."
+                    </div>
+                    <div class="flex items-center justify-between pt-2">
+                        <span class="text-xs text-slate-400">Visited: August 2026</span>
+                        <a href="https://youtube.com" target="_blank" class="neo-btn px-4 py-2 bg-gold/10 hover:bg-gold hover:text-black text-gold text-xs rounded-xl border border-gold/40">Watch Full Review</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 7: CONTACT & RESERVATION ================= -->
+        <section id="page-contact" class="page-content space-y-10 hidden">
+            <div class="glass-spatial p-8 rounded-3xl border-2 border-gold/40 relative">
+                <span class="font-graffiti text-gold text-2xl">Reservations & Location</span>
+                <h1 class="font-syne font-black text-4xl md:text-6xl text-white mt-1">RESERVE YOUR TABLE</h1>
+                <p class="text-slate-300 max-w-2xl mt-2 font-light">
+                    Experience spatial luxury first hand. Due to high demand and limited seating, advance reservations are recommended.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Reservation Form Component -->
+                <div class="lg:col-span-7 glass-spatial-card p-6 md:p-8 rounded-3xl border-2 border-gold">
+                    <h3 class="font-syne font-bold text-2xl text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="calendar" class="text-gold"></i> Table Reservation Form
+                    </h3>
+
+                    <form id="reservation-form" onsubmit="handleReservation(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Full Name</label>
+                                <input type="text" required placeholder="Alexander Wright" class="w-full bg-obsidian/80 border border-white/20 focus:border-gold rounded-xl px-4 py-3 text-white text-sm outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Email Address</label>
+                                <input type="email" required placeholder="alexander@luxury.com" class="w-full bg-obsidian/80 border border-white/20 focus:border-gold rounded-xl px-4 py-3 text-white text-sm outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Date</label>
+                                <input type="date" required class="w-full bg-obsidian/80 border border-white/20 focus:border-gold rounded-xl px-4 py-3 text-white text-sm outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Time</label>
+                                <select required class="w-full bg-obsidian/80 border border-white/20 focus:border-gold rounded-xl px-4 py-3 text-white text-sm outline-none transition-colors">
+                                    <option value="18:00">6:00 PM</option>
+                                    <option value="19:30">7:30 PM</option>
+                                    <option value="21:00">9:00 PM</option>
+                                    <option value="22:30">10:30 PM</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Guests</label>
+                                <select required class="w-full bg-obsidian/80 border border-white/20 focus:border-gold rounded-xl px-4 py-3 text-white text-sm outline-none transition-colors">
+                                    <option value="2">2 Guests (Table)</option>
+                                    <option value="4">4 Guests (Booth)</option>
+                                    <option value="6">6 Guests (VIP)</option>
+                                    <option value="10">10+ Guests (Private Room)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Special Requests & Dietary Notes</label>
+                            <textarea rows="3" placeholder="e.g. Birthday celebration, dietary allergies, VIP lounge request..." class="w-full bg-obsidian/80 border border-white/20 focus:border-gold rounded-xl px-4 py-3 text-white text-sm outline-none transition-colors"></textarea>
+                        </div>
+
+                        <button type="submit" class="neo-btn w-full py-4 bg-gold hover:bg-gold-bright text-black font-syne font-black rounded-xl border-2 border-black shadow-neo text-sm">
+                            Confirm Table Booking
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Info & Location Map Panel -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Location Card -->
+                    <div class="glass-spatial-card p-6 rounded-3xl border-2 border-cyan/40 space-y-4">
+                        <h4 class="font-syne font-bold text-xl text-white flex items-center gap-2">
+                            <i data-lucide="map-pin" class="text-cyan"></i> Location & Hours
+                        </h4>
+                        <div class="text-slate-300 text-sm space-y-2 font-light">
+                            <p class="font-bold text-white">NOIR & NEON Haute Cuisine</p>
+                            <p>742 Fifth Avenue, Manhattan</p>
+                            <p>New York, NY 10019</p>
+                        </div>
+
+                        <div class="pt-4 border-t border-white/10 space-y-2 text-sm text-slate-300">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Dinner Service:</span>
+                                <span class="font-bold text-white">5:00 PM – 12:00 AM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Late Night Lounge:</span>
+                                <span class="font-bold text-white">12:00 AM – 3:00 AM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Map Placeholder -->
+                    <div class="glass-spatial-card p-4 rounded-3xl border-2 border-white/10 h-60 relative overflow-hidden flex flex-col justify-center items-center text-center">
+                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80" alt="Map Location" class="absolute inset-0 w-full h-full object-cover opacity-40">
+                        <div class="relative z-10 p-4 bg-obsidian/90 rounded-2xl border border-gold backdrop-blur-md">
+                            <i data-lucide="navigation" class="w-8 h-8 text-gold mx-auto mb-2 animate-bounce"></i>
+                            <span class="font-syne font-bold text-white block">Fifth Ave, Manhattan</span>
+                            <span class="text-xs text-cyan">Valet Parking Available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PROPER SPATIAL NEO-BRUTALIST FOOTER SECTION (DISPLAYED ON ALL PAGES) -->
+    <footer class="border-t-2 border-gold/40 bg-obsidian/95 backdrop-blur-xl pt-16 pb-10 px-4 md:px-8 relative z-20 mt-16 spray-bg">
+        <div class="max-w-7xl mx-auto space-y-12">
+            
+            <!-- TOP SECTION: NEWSLETTER BANNER -->
+            <div class="glass-spatial p-8 md:p-10 rounded-3xl border-2 border-cyan/40 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-spatial">
+                <div class="space-y-2 text-center lg:text-left">
+                    <span class="font-graffiti text-cyan text-lg">VIP Culinary Gazette</span>
+                    <h3 class="font-syne font-black text-2xl md:text-4xl text-white">JOIN THE OBSIDIAN CLUB</h3>
+                    <p class="text-slate-300 text-sm max-w-md font-light">
+                        Receive private invitations to secret menu tasting events, chef tables, and exclusive VIP dining drops.
+                    </p>
+                </div>
+                <form onsubmit="handleNewsletter(event)" class="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
+                    <input type="email" required placeholder="Enter your email address..." class="bg-obsidian border-2 border-white/20 focus:border-cyan rounded-xl px-5 py-3.5 text-white text-sm outline-none w-full sm:w-80 transition-colors">
+                    <button type="submit" class="neo-btn bg-cyan text-black px-6 py-3.5 rounded-xl border-2 border-black shadow-neo font-syne text-xs whitespace-nowrap">
+                        Subscribe Now <i data-lucide="send" class="w-4 h-4 inline ml-1"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- MAIN FOOTER GRID (4 COLUMNS) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+                
+                <!-- COL 1: BRAND IDENTITY (4 COLS) -->
+                <div class="lg:col-span-4 space-y-5">
+                    <a href="#" onclick="switchPage('home'); return false;" class="flex items-center gap-2 group w-fit">
+                        <div class="w-12 h-12 rounded-xl bg-gold flex items-center justify-center font-syne text-black font-extrabold text-2xl shadow-neo border-2 border-black transform group-hover:rotate-6 transition-transform">
+                            N
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-syne font-black text-2xl tracking-tighter leading-none text-white flex items-center gap-1">
+                                NOIR <span class="text-gold">&</span> NEON
+                            </span>
+                            <span class="font-graffiti text-xs text-cyan tracking-widest uppercase">Gastronomy</span>
+                        </div>
+                    </a>
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+                        Where Michelin-level high gastronomy collides with neo-brutalist spatial architecture and raw street art culture.
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-black hover:bg-gold hover:border-black transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-black hover:bg-cyan hover:border-black transition-all">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-black hover:bg-magenta hover:border-black transition-all">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-black hover:bg-gold hover:border-black transition-all">
+                            <i data-lucide="music-2" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- COL 2: QUICK NAVIGATION (3 COLS) -->
+                <div class="lg:col-span-3 space-y-4">
+                    <h4 class="font-syne font-bold text-white text-lg tracking-wider border-b border-gold/30 pb-2 flex items-center gap-2">
+                        <i data-lucide="compass" class="text-gold w-5 h-5"></i> NAVIGATION
+                    </h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><button onclick="switchPage('home')" class="hover:text-gold transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i> Home</button></li>
+                        <li><button onclick="switchPage('main-dishes')" class="hover:text-gold transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i> Main Dishes</button></li>
+                        <li><button onclick="switchPage('desserts')" class="hover:text-gold transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i> Editorial Desserts</button></li>
+                        <li><button onclick="switchPage('popular')" class="hover:text-gold transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i> Popular Dishes</button></li>
+                        <li><button onclick="switchPage('gallery')" class="hover:text-gold transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i> Visual Gallery</button></li>
+                        <li><button onclick="switchPage('visitors')" class="hover:text-gold transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i> Visitors & Vloggers</button></li>
+                        <li><button onclick="switchPage('contact')" class="hover:text-gold transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i> Contact & Reserve</button></li>
+                    </ul>
+                </div>
+
+                <!-- COL 3: OPERATING HOURS (2 COLS) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h4 class="font-syne font-bold text-white text-lg tracking-wider border-b border-cyan/30 pb-2 flex items-center gap-2">
+                        <i data-lucide="clock" class="text-cyan w-5 h-5"></i> HOURS
+                    </h4>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div>
+                            <span class="block text-slate-400 uppercase font-bold">Mon – Thu</span>
+                            <span class="font-syne text-white text-sm">5:00 PM – 12:00 AM</span>
+                        </div>
+                        <div>
+                            <span class="block text-slate-400 uppercase font-bold">Fri – Sat</span>
+                            <span class="font-syne text-cyan text-sm">5:00 PM – 2:00 AM</span>
+                        </div>
+                        <div>
+                            <span class="block text-slate-400 uppercase font-bold">Sun Brunch</span>
+                            <span class="font-syne text-gold text-sm">11:00 AM – 4:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COL 4: CONTACT & LOCATION (3 COLS) -->
+                <div class="lg:col-span-3 space-y-4">
+                    <h4 class="font-syne font-bold text-white text-lg tracking-wider border-b border-magenta/30 pb-2 flex items-center gap-2">
+                        <i data-lucide="map-pin" class="text-magenta w-5 h-5"></i> CONTACT
+                    </h4>
+                    <ul class="space-y-3 text-xs text-slate-300">
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="building" class="w-4 h-4 text-magenta shrink-0 mt-0.5"></i>
+                            <span>742 Fifth Avenue, Manhattan, NY 10019</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="phone" class="w-4 h-4 text-cyan shrink-0"></i>
+                            <span class="font-mono text-slate-200">+1 (212) 555-8809</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="mail" class="w-4 h-4 text-gold shrink-0"></i>
+                            <span>vip@noirandneon.com</span>
+                        </li>
+                    </ul>
+                    <button onclick="switchPage('contact')" class="neo-btn w-full py-2.5 bg-white/5 hover:bg-gold hover:text-black text-gold font-syne text-xs rounded-xl border border-gold/40 mt-2">
+                        Book Table Directly
+                    </button>
+                </div>
+            </div>
+
+            <!-- BOTTOM COPYRIGHT BAR -->
+            <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <div class="flex items-center gap-2">
+                    <span>© 2026 NOIR & NEON Haute Gastronomy Inc. All rights reserved.</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#" onclick="showToast('Privacy Policy: All data encrypted.'); return false;" class="hover:text-slate-300">Privacy Policy</a>
+                    <a href="#" onclick="showToast('Terms: Luxury dining standards apply.'); return false;" class="hover:text-slate-300">Terms of Service</a>
+                    <a href="#" onclick="showToast('Concierge available 24/7.'); return false;" class="hover:text-slate-300">VIP Support</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ORDER / INQUIRE MODAL -->
+    <div id="order-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-spatial p-8 rounded-3xl border-2 border-gold max-w-md w-full relative shadow-2xl animate-fade-in">
+            <button onclick="closeModal('order-modal')" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <span class="font-graffiti text-cyan text-lg">Direct Dish Order</span>
+            <h3 id="modal-dish-title" class="font-syne font-black text-2xl text-white mt-1">Dish Name</h3>
+            <span id="modal-dish-price" class="text-gold font-syne font-bold text-xl block mb-4">$00</span>
+
+            <form onsubmit="handleDishOrder(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Your Name</label>
+                    <input type="text" required placeholder="Guest Name" class="w-full bg-obsidian border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Table Number or Address</label>
+                    <input type="text" required placeholder="Table #4 or VIP Lounge" class="w-full bg-obsidian border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Special Chef Notes</label>
+                    <input type="text" placeholder="Medium rare, extra sauce, etc." class="w-full bg-obsidian border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-gold">
+                </div>
+                <button type="submit" class="neo-btn w-full py-3 bg-gold text-black font-syne font-bold rounded-xl border-2 border-black shadow-neo text-xs uppercase">
+                    Confirm Order to Kitchen
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX PHOTO MODAL -->
+    <div id="lightbox-modal" class="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 hidden flex flex-col items-center justify-center p-4">
+        <button onclick="closeModal('lightbox-modal')" class="absolute top-6 right-6 p-3 bg-white/10 hover:bg-gold hover:text-black text-white rounded-full transition-colors z-50">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="max-w-4xl w-full flex flex-col items-center">
+            <img id="lightbox-img" src="" alt="Gallery Lightbox" class="max-h-[75vh] w-auto object-contain rounded-2xl border-2 border-gold shadow-spatial">
+            <h4 id="lightbox-caption" class="font-syne font-bold text-xl text-white mt-4 text-center">Caption</h4>
+        </div>
+    </div>
+
+    <!-- SUCCESS NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-gold text-black px-6 py-4 rounded-2xl border-2 border-black shadow-neo font-syne font-bold flex items-center gap-3">
+        <i data-lucide="check-circle-2" class="w-6 h-6 text-black"></i>
+        <span id="toast-msg">Action completed successfully!</span>
+    </div>
+
+    <!-- JAVASCRIPT FOR PAGE ROUTING & INTERACTIONS -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Page Router Functionality
+        function switchPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.add('hidden'));
+
+            // Show selected page
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update Active Nav Tab styling
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-gold', 'bg-white/5', 'border', 'border-gold/40');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeBtn = document.getElementById(`nav-${pageId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-300');
+                activeBtn.classList.add('text-gold', 'bg-white/5', 'border', 'border-gold/40');
+            }
+
+            // Update document title dynamically
+            const titles = {
+                'home': 'NOIR & NEON | Haute Culinary Art',
+                'main-dishes': 'Main Courses | NOIR & NEON',
+                'desserts': 'Editorial Desserts | NOIR & NEON',
+                'popular': 'Most Popular Dishes | NOIR & NEON',
+                'gallery': 'Visual Gallery | NOIR & NEON',
+                'visitors': 'Vloggers & Visitors | NOIR & NEON',
+                'contact': 'Reserve Table & Contact | NOIR & NEON'
+            };
+            document.title = titles[pageId] || 'NOIR & NEON';
+        }
+
+        // Mobile Navigation Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-toggle').addEventListener('click', toggleMobileMenu);
+
+        // Filter Dishes Functionality
+        function filterDishes(category, pageType) {
+            const cards = document.querySelectorAll('#mains-grid .dish-card');
+            cards.forEach(card => {
+                const cardCategories = card.getAttribute('data-category');
+                if (category === 'all' || cardCategories.includes(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Update Filter Buttons Style
+            const btns = document.querySelectorAll('.filter-main-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-cyan', 'text-black');
+                btn.classList.add('bg-white/5', 'text-slate-300');
+            });
+            event.target.classList.remove('bg-white/5', 'text-slate-300');
+            event.target.classList.add('bg-cyan', 'text-black');
+        }
+
+        // Modal Functions
+        function openOrderModal(dishTitle, price) {
+            document.getElementById('modal-dish-title').textContent = dishTitle;
+            document.getElementById('modal-dish-price').textContent = price;
+            document.getElementById('order-modal').classList.remove('hidden');
+        }
+
+        function openLightbox(imgUrl, caption) {
+            document.getElementById('lightbox-img').src = imgUrl;
+            document.getElementById('lightbox-caption').textContent = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        // Form Submission Handlers
+        function handleReservation(e) {
+            e.preventDefault();
+            showToast('Table Reservation Confirmed! We look forward to hosting you.');
+            e.target.reset();
+        }
+
+        function handleDishOrder(e) {
+            e.preventDefault();
+            closeModal('order-modal');
+            showToast('Dish order sent to Executive Kitchen!');
+            e.target.reset();
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            showToast('Welcome to the Obsidian VIP Club! Confirmation email sent.');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
